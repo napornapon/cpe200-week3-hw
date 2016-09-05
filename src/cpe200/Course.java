@@ -10,20 +10,70 @@ public class Course {
     }
 
     public Course(String n, String cid) {
-        // implement here
+        if(n != "") {
+            this.course_name = n;
+        }
+        else {
+            this.course_name = "TBA";
+        }
+        if(cid != "") {
+            this.course_id = cid;
+        }
+        else {
+            this.course_id = "000000";
+        }
+        this.lecturer = "TBA";
+        this.max_students = 30;
     }
 
     public Course(String n, String cid, String l) {
-        // implement here
+        if(n != "") {
+            this.course_name = n;
+        }
+        else {
+            this.course_name = "TBA";
+        }
+        if(cid != "") {
+            this.course_id = cid;
+        }
+        else {
+            this.course_id = "000000";
+        }
+        if(l != "") {
+            this.lecturer = l;
+        }
+        else {
+            this.lecturer = "TBA";
+        }
+
+        this.max_students = 30;
     }
 
     public Course(String n, String cid, String l, int max) {
-        this.course_name = !n.equalsIgnoreCase("")?n:"TBA";
-        // implement the rest here
+        if(n != "") {
+            this.course_name = n;
+        }
+        else {
+            this.course_name = "TBA";
+        }
+        if(cid != "") {
+            this.course_id = cid;
+        }
+        else {
+            this.course_id = "000000";
+        }
+        if(l != "") {
+            this.lecturer = l;
+        }
+        else {
+            this.lecturer = "TBA";
+        }
+
+        this.max_students = max;
     }
 
     public String getCourse_name() {
-        return course_name;
+        return this.course_name;
     }
 
     public void setCourse_name(String course_name) {
@@ -31,39 +81,42 @@ public class Course {
     }
 
     public String getCourse_id() {
-        return course_id;
+        return this.course_id;
     }
 
     public void setCourse_id(String course_id) {
-        this.course_id = isValidCourse_id(course_id)?course_id:this.course_id;
+        if(isValidCourse_id(course_id)) {
+            this.course_id = course_id;
+        }
     }
 
     // implement the other get and set methods here
     public String getLecturer() {
-        // implement here
-        return "lecturer";
+        return this.lecturer;
     }
 
     public void setLecturer(String lecturer) {
-        // implement here
+        this.lecturer = !lecturer .equalsIgnoreCase("")?lecturer :this.lecturer ;
     }
 
     public int getMax_students() {
-        // implement here
-        return 0;
+        return this.max_students;
     }
 
     public void setMax_students(int max_students) {
-        // implement here
+        if(max_students>=10) {
+            this.max_students = max_students;
+        }
     }
 
     public int getNo_students() {
-        // implement here
-        return 0;
+        return this.no_students;
     }
 
     public void setNo_students(int no_students) {
-        // implement here
+        if(no_students<this.max_students && no_students>=0) {
+            this.no_students = no_students;
+        }
     }
 
     @Override
@@ -72,18 +125,26 @@ public class Course {
                 + this.course_id + "), Teacher: "
                 + this.lecturer + ", has ";
 
-        // implement the rest here
-
+        if(this.no_students==0) {
+            o = o+"NO"+" student, [maximum: "+this.max_students+"]"; ;
+        }
+        else if(this.no_students==1) {
+            o = o+"ONE"+" student, [maximum: "+this.max_students+"]";;
+        }
+        else {
+            o = o+this.no_students+" students, [maximum: "+this.max_students+"]";;
+        }
         return o;
     }
 
     private boolean isValidCourse_id(String id) {
         Pattern p = Pattern.compile(idREGEX);
         Matcher m = p.matcher(id);
-
-        // implement the rest here
-
-        return true;
+        if(!(m.find()) || id.length()>6) {
+            return false;
+        }
+        else
+            return true;
     }
 
     // Regular expression for the Student ID pattern
@@ -94,5 +155,5 @@ public class Course {
     private String course_id;
     private String lecturer;
     private int max_students;
-    private int no_students;
+    private int no_students=0;
 }
